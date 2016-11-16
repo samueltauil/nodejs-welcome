@@ -8,13 +8,13 @@ var healthy=true;
 
 
 app.get('/', function (req, res) {
-  res.send('Hello world v7 ' + os.hostname() + '\n');
+  res.send('Welcome App [version: 3 - ' + os.hostname() + ']\n');
 });
 
 
 
 app.get('/healthz', function (req, res) {
-  console.log('health enquiry')
+  console.log('health check')
   if(healthy)
    res.send('OK');
   else
@@ -22,7 +22,7 @@ app.get('/healthz', function (req, res) {
 });
 
 
-app.get('/cancer', function (req, res) {
+app.get('/kill', function (req, res) {
    healthy=false;
    res.send('Killed ' + os.hostname());
 });
