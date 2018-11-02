@@ -8,7 +8,7 @@ var healthy=true;
 
 
 app.get('/', function (req, res) {
-  res.send('Welcome App [version: 11 - ' + os.hostname() + ']\n');
+  res.send('Welcome App [version: 100 - ' + os.hostname() + ']\n');
 });
 
 
