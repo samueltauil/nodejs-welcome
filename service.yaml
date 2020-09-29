@@ -1,0 +1,30 @@
+kind: Service
+apiVersion: v1
+metadata:
+  annotations:
+    app.openshift.io/vcs-ref: master
+    app.openshift.io/vcs-uri: 'https://github.com/samueltauil/nodejs-welcome.git'
+  name: nodejs-welcome
+  namespace: welcome
+  labels:
+    app: nodejs-welcome
+    app.kubernetes.io/component: nodejs-welcome
+    app.kubernetes.io/instance: nodejs-welcome
+    app.kubernetes.io/name: nodejs
+    app.kubernetes.io/part-of: nodejs-welcome
+    app.openshift.io/runtime: nodejs
+    app.openshift.io/runtime-version: '12'
+spec:
+  ports:
+    - name: 8080-tcp
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+  selector:
+    app: nodejs-welcome
+    deploymentconfig: nodejs-welcome
+  type: ClusterIP
+  sessionAffinity: None
+status:
+  loadBalancer: {}
+
