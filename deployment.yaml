@@ -28,6 +28,7 @@ spec:
     spec:
       containers:
         - name: nodejs-welcome
+          image: welcome:latest
           ports:
             - containerPort: 8080
               protocol: TCP
