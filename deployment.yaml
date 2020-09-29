@@ -5,7 +5,6 @@ metadata:
     alpha.image.policy.openshift.io/resolve-names: '*'
     app.openshift.io/vcs-ref: master
     app.openshift.io/vcs-uri: 'https://github.com/samueltauil/nodejs-welcome.git'
-    deployment.kubernetes.io/revision: '2'
   name: nodejs-welcome
   namespace: welcome
   labels:
