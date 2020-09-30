@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
         - name: nodejs-welcome
-          image: nodejs-welcome:latest
+          image: quay.io/stauil/nodejs-welcome:latest
           ports:
             - containerPort: 8080
               protocol: TCP
