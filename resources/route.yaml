@@ -1,0 +1,23 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  annotations:
+  name: nodejs-welcome
+  namespace: welcome
+  labels:
+    app: nodejs-welcome
+    app.kubernetes.io/component: nodejs-welcome
+    app.kubernetes.io/instance: nodejs-welcome
+    app.kubernetes.io/name: nodejs
+    app.kubernetes.io/part-of: nodejs-welcome
+    app.openshift.io/runtime: nodejs
+    app.openshift.io/runtime-version: '12'
+spec:
+  to:
+    kind: Service
+    name: nodejs-welcome
+    weight: 100
+  port:
+    targetPort: 8080-tcp
+  wildcardPolicy: None
+
