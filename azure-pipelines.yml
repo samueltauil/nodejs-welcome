@@ -33,5 +33,5 @@ steps:
   inputs:
     connectionType: 'OpenShift Connection Service'
     openshiftService: 'exelon-cluster'
-    cmd: 'oc scale dc/nodejs-welcome --replicas=3 -n nodejs-welcome'
+    cmd: 'oc scale deployment nodejs-welcome --replicas=3 -n nodejs-welcome'
     ignoreFlag: true
