@@ -1,0 +1,37 @@
+trigger:
+ branches:
+   include:
+     - master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: oc-setup@2
+  inputs:
+    connectionType: 'OpenShift Connection Service'
+    openshiftService: 'exelon-cluster'
+- task: oc-cmd@2
+  inputs:
+    connectionType: 'OpenShift Connection Service'
+    openshiftService: 'exelon-cluster'
+    cmd: 'oc new-project nodejs-exelon'
+    ignoreFlag: true
+- task: oc-cmd@2
+  inputs:
+    connectionType: 'OpenShift Connection Service'
+    openshiftService: 'exelon-cluster'
+    cmd: 'oc delete all --all -n nodejs-exelon'
+    ignoreFlag: true
+- task: oc-cmd@2
+  inputs:
+    connectionType: 'OpenShift Connection Service'
+    openshiftService: 'exelon-cluster'
+    cmd: 'oc new-app https://github.com/samueltauil/nodejs-welcome -n nodejs-exelon'
+    ignoreFlag: true
+- task: oc-cmd@2
+  inputs:
+    connectionType: 'OpenShift Connection Service'
+    openshiftService: 'exelon-cluster'
+    cmd: 'oc scale dc/nodejs-welcome --replicas=3 -n nodejs-welcome'
+    ignoreFlag: true
