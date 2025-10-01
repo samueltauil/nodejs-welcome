@@ -1,39 +1,46 @@
-var express = require('express');
-var os = require("os");
-const PORT = 8080;
+const express = require('express');
+const os = require('os');
+
+const PORT = process.env.PORT || 8080;
 const app = express();
 
+let healthy = true;
 
-var healthy=true;
-
-
-app.get('/', function (req, res) {
-  res.send('Welcome App [version: 2 - ' + os.hostname() + ']\n');
+app.get('/', (req, res) => {
+  res.send(`Welcome App [version: 2 - ${os.hostname()}]\n`);
 });
 
-
-
-app.get('/healthz', function (req, res) {
-  console.log('health check')
-  if(healthy)
-   res.send('OK');
-  else
-   res.status(404).send('NOT OK');
+app.get('/healthz', (req, res) => {
+  console.log('health check');
+  if (healthy) {
+    res.send('OK');
+  } else {
+    res.status(503).send('NOT OK');
+  }
 });
 
-
-app.get('/kill', function (req, res) {
-   healthy=false;
-   res.send('Killed ' + os.hostname());
+app.get('/kill', (req, res) => {
+  healthy = false;
+  res.send(`Killed ${os.hostname()}`);
 });
 
-
-
-app.listen(PORT);
-console.log('Running on http://localhost:' + PORT);
-
-
-process.on('SIGINT', function () {
-    console.log('Cleanup.....');
-    process.exit();
+const server = app.listen(PORT, () => {
+  console.log(`Running on http://localhost:${PORT}`);
 });
+
+const gracefulShutdown = () => {
+  console.log('Received shutdown signal, closing server gracefully...');
+  server.close(() => {
+    console.log('Server closed. Exiting process.');
+    process.exit(0);
+  });
+  
+  // Force close after 10 seconds
+  setTimeout(() => {
+    console.error('Forced shutdown after timeout');
+    process.exit(1);
+  }, 10000);
+};
+
+process.on('SIGINT', gracefulShutdown);
+process.on('SIGTERM', gracefulShutdown);
